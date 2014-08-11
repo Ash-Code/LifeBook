@@ -9,10 +9,16 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,19 +35,36 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
     CustomAdapter listAdapter;
     private ActionBar action;
     public static final int REQUEST_EDIT = 0;
+    private ContentResolver mCr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main__ui);
         action = getActionBar();
         action.hide();
+        setContentView(R.layout.activity_main__ui);
+mCr=getContentResolver();
         getLoaderManager().initLoader(0,null,this);
         mainList = (ListView) findViewById(R.id.mainList);
         list = new ArrayList<Data>();
         mainList.setSmoothScrollbarEnabled(true);
         listAdapter = new CustomAdapter(this, R.layout.data_layout, list);
         mainList.setAdapter(listAdapter);
+        registerForContextMenu(mainList);
+        mainList.setOnItemClickListener(new OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Intent i= new Intent(getBaseContext(), Update.class);
+                Data temp=list.get(position);
+                i.putExtra(LBProvider.KEY_ID,temp.dbId);
+                i.putExtra(LBProvider.KEY_TITLE,temp.title);
+                i.putExtra(LBProvider.KEY_BODY,temp.body);
+                i.putExtra(LBProvider.KEY_DATE,temp.date);
+                i.putExtra(LBProvider.KEY_IMAGES,temp.images);
+                startActivity(i);
+            }
+        });
     }
 
 
@@ -62,42 +85,54 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
             return true;
         }
         if (id == R.id.action_Add) {
-            startActivityForResult(new Intent(this, Edit.class), REQUEST_EDIT);
+            startActivity(new Intent(this, Edit.class));
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void newItem(ArrayList<String> items){
-        ContentResolver cr=getContentResolver();
-        ContentValues vals=new ContentValues();
-        vals.put(LBProvider.KEY_TITLE,items.get(0));
-        vals.put(LBProvider.KEY_BODY,items.get(1));
-        vals.put(LBProvider.KEY_DATE,getDateTime());
-        cr.insert(LBProvider.CONTENT_URI,vals);
-        getLoaderManager().restartLoader(0,null,this);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu,View v, ContextMenuInfo info){
+        super.onCreateContextMenu(menu, v, info);
+        menu.setHeaderTitle("Select The Action");
+        menu.add(0, v.getId(), 0, "Delete");
+
+
+
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        switch (requestCode) {
-            case REQUEST_EDIT:
-                ArrayList<String> res=intent.getStringArrayListExtra("res");
-                if(!res.isEmpty()){
-newItem(res);
-                }
-                break;
+    public boolean onContextItemSelected(MenuItem item)
+    {
 
 
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+
+        try
+        {
+
+            if(item.getTitle()=="Delete")
+            {
+int id=info.position;
+                long rowId=list.get(id).dbId;
+
+                mCr.delete(LBProvider.CONTENT_URI,LBProvider.KEY_ID+"="+rowId,null);
+mCr.notifyChange(LBProvider.CONTENT_URI,null);
+                getLoaderManager().restartLoader(0,null,this);
+
+            }
+            else
+            {return false;}
+            return true;
         }
+        catch(Exception e)
+        {
+            return true;
+        }
+    }
 
-    }
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
+
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -109,12 +144,14 @@ newItem(res);
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data==null)
             return;
+        int iID=data.getColumnIndexOrThrow(LBProvider.KEY_ID);
         int iTitle=data.getColumnIndexOrThrow(LBProvider.KEY_TITLE);
         int iBody=data.getColumnIndexOrThrow(LBProvider.KEY_BODY);
+        int iImages=data.getColumnIndexOrThrow(LBProvider.KEY_IMAGES);
         int iDate=data.getColumnIndexOrThrow(LBProvider.KEY_DATE);
         list.clear();
         while(data.moveToNext()){
-            Data dd=new Data(data.getString(iTitle),data.getString(iBody),"",data.getString(iDate));
+            Data dd=new Data(data.getInt(iID),data.getString(iTitle),data.getString(iBody),data.getString(iImages),data.getString(iDate));
             list.add(dd);
         }
         listAdapter.notifyDataSetChanged();

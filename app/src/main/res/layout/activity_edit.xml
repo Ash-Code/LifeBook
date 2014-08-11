@@ -1,5 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,6 +27,24 @@ android:id="@+id/Ebody"
         android:background="@drawable/patched2"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
+    <HorizontalScrollView
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageScroll"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:minWidth="100dp"
+        >
+        <ImageView
+android:scaleType="centerCrop"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_launcher"/>
+        </HorizontalScrollView>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <Button
         android:id="@+id/b"
         android:layout_width="wrap_content"
@@ -30,5 +53,14 @@ android:id="@+id/Ebody"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:onClick="onClix"/>
-
+    <Button
+        android:id="@+id/b2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:onClick="onCancel" />
 </LinearLayout>
+</LinearLayout>
+</ScrollView>

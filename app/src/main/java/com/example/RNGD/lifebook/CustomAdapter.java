@@ -71,7 +71,7 @@ public class CustomAdapter extends ArrayAdapter<Data> {
         TextView title = (TextView) convertView.findViewById(R.id.title);
         title.setText(list.get(position).title);
         TextView date=(TextView)convertView.findViewById(R.id.time);
-        date.setText(formatDateTime(context,list.get(position).date));
+        date.setText(list.get(position).date);
         TextView body = (TextView) convertView.findViewById(R.id.text);
         body.setText(list.get(position).body);
         return convertView;

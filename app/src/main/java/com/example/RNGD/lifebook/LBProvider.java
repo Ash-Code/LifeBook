@@ -12,8 +12,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-import java.security.Provider;
-
 /**
  * Created by Ashwin Kumar on 8/3/2014.
  */
@@ -21,12 +19,14 @@ public class LBProvider extends ContentProvider {
 public static final Uri CONTENT_URI= Uri.parse("content://com.example.RNGD.LBProvider/elements");
     public  static final String DATABASE_NAME="lifebook.db";
     public static final String DATABASE_TABLE="DiaryEntries";
-    public static final int DATABASE_VERSION=1;
+    public static final int DATABASE_VERSION=3;
     public static final String KEY_ID="_id";
     public static final String KEY_TITLE="title";
     public static final String KEY_BODY="body";
     public static final String KEY_IMAGES="images";
     public static final String KEY_DATE="dates";
+    public static final String KEY_TAG="tags";
+    public static final String KEY_COLOR="color";
     public static final int ALL_ROWS=1;
     public static final int SINGLE_ROW=2;
 
@@ -38,7 +38,7 @@ public static final Uri CONTENT_URI= Uri.parse("content://com.example.RNGD.LBPro
         urimatcher.addURI("com.example.RNGD.LBProvider","elements",ALL_ROWS);
         urimatcher.addURI("com.example.RNGD.LBProvider","elements/#",SINGLE_ROW);
     }
-    public static final String DATABASE_CREATE="create table "+DATABASE_TABLE+" ("+KEY_ID+" integer primary key autoincrement, "+KEY_TITLE+" text not null, "+KEY_BODY+" text, "+KEY_IMAGES+" text, "+KEY_DATE+"text);";
+    public static final String DATABASE_CREATE="CREATE TABLE "+DATABASE_TABLE+" ("+KEY_ID+" INTEGER PRIMARY KEY, "+KEY_DATE+" TEXT, "+KEY_TITLE+" TEXT, "+KEY_BODY+" TEXT, "+KEY_IMAGES+" TEXT, "+KEY_TAG+" TEXT);";
 
 
 
@@ -51,7 +51,9 @@ public static final Uri CONTENT_URI= Uri.parse("content://com.example.RNGD.LBPro
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+
             db.execSQL(DATABASE_CREATE);
+
         }
 
         @Override
@@ -124,12 +126,16 @@ dbHelper =new DBHelper(getContext());
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+db=dbHelper.getWritableDatabase();
 
+        db.delete(DATABASE_TABLE,selection, selectionArgs);
         return 0;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        db=dbHelper.getWritableDatabase();
+        db.update(DATABASE_TABLE,values,selection,null);
         return 0;
     }
 

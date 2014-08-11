@@ -5,16 +5,10 @@
     tools:context=".Main_UI"
     android:background="@drawable/yp">
 
-    <TextView
-        android:id="@+id/Header"
-        android:text="@string/hello_world"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        />
+
  <ListView
     android:id="@+id/mainList"
-     android:layout_below="@id/Header"
+     android:layout_marginTop="70dp"
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:divider="@android:color/transparent"
@@ -23,4 +17,5 @@
 
 
      />
+
 </RelativeLayout>
