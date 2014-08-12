@@ -11,7 +11,7 @@
 
         <TextView
             android:layout_marginTop="40dp"
-            android:id="@+id/date1"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="here date" />
@@ -20,69 +20,77 @@
             android:id="@+id/flipperTB"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-            <TextView
-                android:id="@+id/Ttitle"
-                android:layout_marginTop="10dp"
-                android:text="Title"
-                android:height="10dp"
-     android:textSize="30sp"
-                android:layout_width="300dp"
-                android:layout_height="50dp" />
 
-
-            <TextView
-                android:id="@+id/Tbody"
-                android:layout_marginTop="10dp"
-                android:text="Content here"
-               android:textSize="15sp"
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <EditText
-                    android:id="@+id/Etitle"
-                    android:layout_marginTop="40dp"
+
+                <TextView
+                    android:id="@+id/Ttitle"
+                    android:layout_marginTop="10dp"
                     android:text="Title"
                     android:height="10dp"
+                    android:textSize="30sp"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp" />
 
-                    android:layout_width="200dp"
+
+                <TextView
+                    android:id="@+id/Tbody"
+                    android:layout_marginTop="10dp"
+                    android:text="Content here"
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/Etitle"
+                    android:layout_marginTop="10dp"
+                    android:text="Title"
+                    android:height="50dp"
+                    android:textSize="30sp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content" />
 
 
                 <EditText
                     android:id="@+id/Ebody"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Content here"
-
+                    android:textSize="15sp"
+                    android:textAlignment="viewStart"
                     android:layout_width="match_parent"
                     android:layout_height="250dp" />
-                </LinearLayout>
+            </LinearLayout>
         </ViewFlipper>
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:text="Images"
-    />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Images" />
+
         <HorizontalScrollView
             android:layout_marginTop="20dp"
-            android:id="@+id/imageScroll1"
+            android:id="@+id/imageScroll"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:minWidth="100dp">
 
-            <ImageView
-                android:scaleType="centerCrop"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_launcher" />
+          <LinearLayout
+              android:id="@+id/imageScrollLayout"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:orientation="horizontal">
+
+              </LinearLayout>
         </HorizontalScrollView>
 
         <ViewFlipper
@@ -103,6 +111,14 @@
                     android:layout_marginTop="20dp"
                     android:textSize="20sp"
                     android:onClick="onEdit" />
+                <Button
+                    android:id="@+id/imageAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add image"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20sp"
+                    android:onClick="onImageAdd" />
             </LinearLayout>
 
             <LinearLayout

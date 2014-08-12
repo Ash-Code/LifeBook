@@ -1,66 +1,84 @@
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.RNGD.lifebook.Edit"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.RNGD.lifebook.Edit">
-
-   <EditText
-       android:id="@+id/Etitle"
-       android:layout_marginTop="40dp"
-       android:text="Title"
-       android:height="10dp"
-       android:background="@drawable/patched2"
-       android:layout_width="200dp"
-       android:layout_height="wrap_content" />
-
-
-    <EditText
-android:id="@+id/Ebody"
-        android:layout_marginTop="20dp"
-        android:text="Content here"
-        android:background="@drawable/patched2"
-        android:layout_width="match_parent"
-        android:layout_height="250dp" />
-    <HorizontalScrollView
-        android:layout_marginTop="20dp"
-        android:id="@+id/imageScroll"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:minWidth="100dp"
-        >
-        <ImageView
-android:scaleType="centerCrop"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_launcher"/>
-        </HorizontalScrollView>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:id="@+id/date1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="here date" />
+
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    >
+        <EditText
+            android:id="@+id/Etitle1"
+            android:text="Title"
+            android:height="50dp"
+            android:textSize="30sp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/done1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:background="@android:drawable/ic_menu_edit"
+        android:layout_alignParentRight="true"
+        android:textSize="20sp"
+        android:onClick="onDone" />
+
+</RelativeLayout>
+        <EditText
+            android:id="@+id/Ebody1"
+            android:layout_marginTop="10dp"
+            android:text="Content here"
+            android:textSize="15sp"
+            android:textAlignment="viewStart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
     android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Images"
+            android:textSize="20sp"/>
     <Button
-        android:id="@+id/b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:onClick="onClix"/>
-    <Button
-        android:id="@+id/b2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:onClick="onCancel" />
+        android:id="@+id/imageAdd1"
+        android:layout_marginLeft="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@android:drawable/ic_input_add"
+        android:onClick="onImageAdd" />
 </LinearLayout>
-</LinearLayout>
+        <HorizontalScrollView
+            android:layout_marginTop="20dp"
+            android:id="@+id/imageScroll1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:minWidth="100dp">
+
+            <LinearLayout
+                android:id="@+id/imageScrollLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
 </ScrollView>
