@@ -1,12 +1,10 @@
 package com.example.RNGD.lifebook;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 
 public class Welcome extends Activity {
@@ -54,11 +51,9 @@ public class Welcome extends Activity {
         prefButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(),Preference.class));
+                startActivity(new Intent(getBaseContext(), Preference.class));
             }
         });
-
-
 
 
     }
@@ -67,20 +62,43 @@ public class Welcome extends Activity {
     protected void onResume() {
         super.onResume();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        password = pref.getString("newpass1","DEFAULT");
-        if (password != null&&password.length()!=0) {
-            Toast.makeText(this,password+" works"+password.length(),Toast.LENGTH_SHORT).show();
-            pass.setVisibility(View.VISIBLE);
-            desc.setText("Please enter the password to access database");
+        password = pref.getString("newpass1", "DEFAULT");
+        boolean noPass = pref.getBoolean("noPass", true);
+        if (noPass) {
+            desc.setText(R.string.welcome_remind + " Please wait...");
             desc.setVisibility(View.VISIBLE);
-            accessButton.setVisibility(View.VISIBLE);
-            prefButton.setVisibility(View.GONE);
-
+            accessButton.setVisibility(View.INVISIBLE);
+            prefButton.setVisibility(View.INVISIBLE);
+            pass.setVisibility(View.INVISIBLE);
+            Launcher launch = new Launcher();
+            launch.start();
         } else {
-            accessButton.setVisibility(View.GONE);
-            prefButton.setVisibility(View.VISIBLE);
-            desc.setText(R.string.welcome_remind);
-            desc.setVisibility(View.VISIBLE);
+            if (password != null && password.length() != 0) {
+                Toast.makeText(this, password + " works" + password.length(), Toast.LENGTH_SHORT).show();
+                pass.setVisibility(View.VISIBLE);
+                desc.setText("Please enter the password to access database");
+                desc.setVisibility(View.VISIBLE);
+                accessButton.setVisibility(View.VISIBLE);
+                prefButton.setVisibility(View.GONE);
+
+            } else {
+                accessButton.setVisibility(View.GONE);
+                prefButton.setVisibility(View.VISIBLE);
+                desc.setText(R.string.welcome_remind);
+                desc.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public class Launcher extends Thread {
+        public void run() {
+            try {
+                Thread.sleep(3000);
+            } catch (Exception c) {
+
+            }
+            finish();
+            startActivity(new Intent(getBaseContext(), Main_UI.class));
         }
     }
 

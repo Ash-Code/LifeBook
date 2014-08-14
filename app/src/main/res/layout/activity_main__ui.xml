@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main_UI"
-    android:background="@drawable/yp">
+    android:background="@drawable/up2">
 
 
  <ListView

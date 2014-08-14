@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -26,19 +27,16 @@ import com.example.RNGD.helpers.Data;
 import com.example.RNGD.helpers.LBProvider;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    ArrayList<Data> list;
-
-
+    LinkedList<Data> list;
     ListView mainList;
     CustomAdapter listAdapter;
     private ActionBar action;
     public static final int REQUEST_EDIT = 0;
-
     private ContentResolver mCr;
 
     @Override
@@ -46,10 +44,12 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__ui);
         mCr = getContentResolver();
-        getLoaderManager().initLoader(0, null, this);
+
+        LoaderManager lm = getLoaderManager();
+        lm.initLoader(0, null, this);
         mainList = (ListView) findViewById(R.id.mainList);
 
-        list = new ArrayList<Data>();
+        list = new LinkedList<Data>();
         mainList.setSmoothScrollbarEnabled(true);
         listAdapter = new CustomAdapter(this, R.layout.data_layout, list);
         mainList.setAdapter(listAdapter);
@@ -96,8 +96,8 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo info) {
         super.onCreateContextMenu(menu, v, info);
-        menu.setHeaderTitle("Select The Action");
         menu.add(0, v.getId(), 0, "Delete");
+        menu.add(0, v.getId(), 1, "Delete multiple");
 
 
     }
@@ -131,7 +131,9 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        CursorLoader loader = new CursorLoader(this, LBProvider.CONTENT_URI, null, null, null, null);
+        CursorLoader loader;
+
+        loader = new CursorLoader(this, LBProvider.CONTENT_URI, null, null, null, null);
         return loader;
     }
 
@@ -148,57 +150,26 @@ public class Main_UI extends Activity implements LoaderManager.LoaderCallbacks<C
         list.clear();
         while (data.moveToNext()) {
 
-            Bitmap cover = null;
+
+            String finalUri = "";
             String[] stringuri = data.getString(iImages).split(" ");
             for (int i = 0; i < stringuri.length; i++) {
-                try {
-
-                    cover = decodeUri(Uri.parse(stringuri[i]));
-                } catch (Exception f) {
-
+                if (stringuri[i].length() > 5) {
+                    finalUri = stringuri[i];
                 }
-                if (cover != null)
-                    break;
             }
 
-            Data dd = new Data(data.getInt(iID), data.getString(iTitle), data.getString(iBody), data.getString(iImages), cover, data.getString(iDate));
-            list.add(dd);
+            Log.v("DATA IMAGES URI ", stringuri[0] + " thus content " + data.getString(iImages));
+
+
+            Data dd = new Data(data.getInt(iID), data.getString(iTitle), data.getString(iBody), data.getString(iImages), null, finalUri, data.getString(iDate));
+            list.addFirst(dd);
         }
         listAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
-
-    private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
-
-        // Decode image size
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
-
-        // The new size we want to scale to
-        final int REQUIRED_SIZE = 100;
-
-        // Find the correct scale value. It should be the power of 2.
-        int width_tmp = o.outWidth, height_tmp = o.outHeight;
-        int scale = 1;
-        while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE
-                    || height_tmp / 2 < REQUIRED_SIZE) {
-                break;
-            }
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-
-        // Decode with inSampleSize
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
 
     }
 

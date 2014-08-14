@@ -84,7 +84,7 @@ public class Edit extends Activity {
         mCr = getContentResolver();
         ContentValues vals = new ContentValues();
         if (imageList == null)
-            imageList = " ";
+            imageList = "";
         String[] tempList = imageList.split(" ");
         vals.put(LBProvider.KEY_TITLE, Etitle.getText().toString());
         vals.put(LBProvider.KEY_BODY, Ebody.getText().toString());
@@ -122,7 +122,7 @@ public class Edit extends Activity {
 
                     }
 
-                    if (imageList == null)
+                    if (imageList == null|| imageList.equals(""))
                         imageList = selectedImage.toString();
                     else
                         imageList = imageList + " " + selectedImage.toString();
