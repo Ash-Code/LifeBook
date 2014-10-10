@@ -3,6 +3,7 @@ package com.example.RNGD.lifebook;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -29,6 +30,10 @@ public class Welcome extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
+        TextView title=(TextView)findViewById(R.id.LIFEBOOKTITLE);
+        Typeface tf=Typeface.createFromAsset(getAssets(),String.format("fonts/%s", "Berlin.ttf"));
+        title.setTypeface(tf);
+
         prefButton = (Button) findViewById(R.id.prefButton);
         accessButton = (Button) findViewById(R.id.accessButton);
         pass = (EditText) findViewById(R.id.pass2);
@@ -62,10 +67,11 @@ public class Welcome extends Activity {
     protected void onResume() {
         super.onResume();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
         password = pref.getString("newpass1", "DEFAULT");
         boolean noPass = pref.getBoolean("noPass", true);
         if (noPass) {
-            desc.setText(R.string.welcome_remind + " Please wait...");
+            desc.setText(R.string.welcome_remind);
             desc.setVisibility(View.VISIBLE);
             accessButton.setVisibility(View.INVISIBLE);
             prefButton.setVisibility(View.INVISIBLE);
@@ -93,7 +99,7 @@ public class Welcome extends Activity {
     public class Launcher extends Thread {
         public void run() {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (Exception c) {
 
             }

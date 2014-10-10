@@ -15,7 +15,6 @@ public class Preference extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.shared_pref);
 
-
     }
 
 }

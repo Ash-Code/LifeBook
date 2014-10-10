@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.RNGD.lifebook">
+    package="com.example.RNGD.lifebook" >
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <provider
             android:name="com.example.RNGD.helpers.LBProvider"
             android:authorities="com.example.RNGD.LBProvider" />
 
         <activity
             android:name=".Main_UI"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.Main_UI" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Edit"
-            android:label="@string/title_activity_edit"/>
+            android:label="@string/title_activity_edit" />
         <activity
             android:name=".Update"
-            android:label="@string/title_activity_update"/>
-
+            android:label="@string/title_activity_update" />
         <activity
             android:name=".Welcome"
-            android:label="@string/title_activity_welcome">
+            android:label="@string/title_activity_welcome" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Preference"
             android:label="Preference" />
+        <activity
+            android:name=".Filter"
+            android:label="@string/title_activity_filter" >
+        </activity>
     </application>
 
 </manifest>

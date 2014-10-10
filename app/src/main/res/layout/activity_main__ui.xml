@@ -1,21 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".Main_UI"
-    android:background="@drawable/up2">
+    android:id="@+id/DrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:id="@+id/Main_UI_RLayout"
+        android:background="@drawable/up2">
 
 
- <ListView
-    android:id="@+id/mainList"
+        <ListView
+            android:id="@+id/mainList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="3dp"
+            android:smoothScrollbar="true"
 
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:divider="@android:color/transparent"
-     android:dividerHeight="3dp"
-     android:smoothScrollbar="true"
+            />
 
+    </RelativeLayout>
 
-     />
-
-</RelativeLayout>
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:drawable/divider_horizontal_dark"
+        android:dividerHeight="1dp"
+        android:background="@color/dark_actionbar" />
+</android.support.v4.widget.DrawerLayout>

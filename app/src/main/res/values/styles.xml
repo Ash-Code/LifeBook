@@ -2,7 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarSize">63dp</item>
         <!-- Customize your theme here. -->
     </style>
+
 
 </resources>

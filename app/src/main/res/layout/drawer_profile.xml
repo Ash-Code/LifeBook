@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <com.example.RNGD.helpers.CircularImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="35dp"
+        android:id="@+id/profilePic"
+        android:src="@drawable/smartpic"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Username"
+        android:textSize="20sp"
+        android:textColor="@android:color/background_light"
+        android:id="@+id/profileName"
+        android:layout_marginBottom="35dp"/>
+
+</LinearLayout>

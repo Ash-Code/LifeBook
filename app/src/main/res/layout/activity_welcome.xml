@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="70sp"
+
             android:id="@+id/LIFEBOOKTITLE"
             android:text="LifeBook"
             android:layout_gravity="center"
@@ -27,7 +28,7 @@
             android:inputType="textPassword"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:visibility="invisible" />
 
@@ -36,8 +37,10 @@
             android:id="@+id/desc"
             android:layout_height="wrap_content"
             android:layout_width="250dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center" />
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+
+            android:gravity="center" />
 
         <FrameLayout
             android:layout_width="wrap_content"

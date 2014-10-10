@@ -6,11 +6,14 @@
             android:title="useless checkbox"
             android:defaultValue="false"
             android:key="checkbox1" />
+
         <PreferenceScreen
             android:icon="@android:drawable/btn_radio"
             android:key="secondPref"
             android:title="Password settings"
             android:summary="set up, disable or change your password">
+
+
             <EditTextPreference
                 android:summary="Change password"
                 android:id="@+id/editPass1"

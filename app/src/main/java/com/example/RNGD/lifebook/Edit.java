@@ -98,6 +98,7 @@ public class Edit extends Activity {
         if (image == null)
             return;
         ImageView temp = new ImageView(this);
+        temp.setScaleType(ImageView.ScaleType.CENTER_CROP);
         temp.setImageBitmap(image);
         imageScrollLayout.addView(temp);
     }
@@ -122,7 +123,7 @@ public class Edit extends Activity {
 
                     }
 
-                    if (imageList == null|| imageList.equals(""))
+                    if (imageList == null || imageList.equals(""))
                         imageList = selectedImage.toString();
                     else
                         imageList = imageList + " " + selectedImage.toString();
@@ -208,7 +209,5 @@ public class Edit extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClix(View v) {
 
-    }
 }

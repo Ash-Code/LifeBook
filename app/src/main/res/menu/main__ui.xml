@@ -5,7 +5,7 @@
         android:title="@string/action_settings"
         android:orderInCategory="1"
         android:icon="@android:drawable/ic_menu_manage"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="never" />
     <item android:id="@+id/action_Add"
         android:title="@string/add"
         android:orderInCategory="2"
@@ -19,4 +19,13 @@
         android:title="delete"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/datePick"
+        android:title="Filter"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/showAll"
+        android:title="showAll"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
 </menu>

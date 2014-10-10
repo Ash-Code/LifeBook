@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,12 @@ import com.example.RNGD.lifebook.R;
 
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 /**
  * Created by Ashwin Kumar on 8/6/2014.
@@ -30,21 +36,15 @@ public class CustomAdapter extends ArrayAdapter<Data> {
     LinkedList<Data> list;
     Bitmap placerHolder;
     private LruCache<String, Bitmap> cache;
-    private final int maxMem;
 
-    public CustomAdapter(Context context, int resource, LinkedList<Data> list) {
+
+    public CustomAdapter(Context context, int resource, LinkedList<Data> list, LruCache<String,Bitmap> cache) {
         super(context, resource, list);
         this.list = list;
         this.context = context;
+        this.cache=cache;
         placerHolder = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
-        maxMem = (int) Runtime.getRuntime().maxMemory() / 1024;
-        int capacity = maxMem / 10;
-        cache = new LruCache<String, Bitmap>(capacity) {
-            @Override
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount() / 1024;
-            }
-        };
+
     }
 
 
@@ -59,17 +59,41 @@ public class CustomAdapter extends ArrayAdapter<Data> {
 
         }
         Data data = list.get(position);
-
+        Calendar curr = stringToCalendar(data.date);
+        TextView day = (TextView) convertView.findViewById(R.id.Cday);
+        day.setText(""+curr.get(Calendar.DAY_OF_MONTH));
+        TextView month=(TextView)convertView.findViewById(R.id.Cmonth);
+        month.setText(curr.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
+        TextView year=(TextView)convertView.findViewById(R.id.Cyear);
+        year.setText(""+curr.get(Calendar.YEAR));
         TextView title = (TextView) convertView.findViewById(R.id.title);
         title.setText(data.title);
-        TextView date = (TextView) convertView.findViewById(R.id.time);
-        date.setText(data.date);
+
         TextView body = (TextView) convertView.findViewById(R.id.text);
         body.setText(data.body);
         ImageView image = (ImageView) convertView.findViewById(R.id.coverImg);
         loadBitmap(data.coverImgUri, image);
 
         return convertView;
+    }
+
+    public Calendar stringToCalendar(String datetime) {
+        Date date = dateParser(datetime);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    public Date dateParser(String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date ret = null;
+        try {
+            ret = dateFormat.parse(date);
+        } catch (ParseException e) {
+
+        }
+        return ret;
     }
 
 

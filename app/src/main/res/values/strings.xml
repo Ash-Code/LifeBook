@@ -7,7 +7,8 @@
     <string name="add">Add entry</string>
     <string name="title_activity_edit">Edit</string>
     <string name="title_activity_update">Update</string>
-    <string name="title_activity_welcome">Welcome</string>
-    <string name="welcome_remind">We request you to password protect your app to prevent misuse of your personal data</string>
+    <string name="title_activity_welcome">LifeBook</string>
+    <string name="welcome_remind">We request you to password protect your app to prevent misuse of your personal data. Go to settings, and un-check disable password</string>
+    <string name="title_activity_filter">Filter</string>
 
 </resources>
